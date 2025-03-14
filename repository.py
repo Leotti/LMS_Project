@@ -27,12 +27,10 @@ class Repository:
         Returns:
             List[Book]: A list of Book objects representing all books in the database.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # remove the following line after your implementation
-        raise NotImplementedError("fetchall_books method is not implemented.")
-
+        
         ### YOUR CODE ###
+        query = "SELECT book_id, title, author, publisher_id, isbn, year_published FROM book;"
+
         try:
             results = self.db.fetch_results(query = query)
             return [Book(*result) for result in results]
@@ -47,13 +45,11 @@ class Repository:
         Args:
             book (Book): The book object to be added.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # params = ...
-        # remove the following line after your implementation
-        raise NotImplementedError("add_book method is not implemented.")
-
+        
         ### YOUR CODE ###
+        query = "INSERT INTO book (title, author, publisher_id, year) VALUES (%s, %s, %s, %s);"
+        params = (book.title, book.author, book.publisher_id, book.isbn, book.year_published)
+
         try:
             self.db.execute_query(query = query, params = params)
             logger.info(f"Book '{book.title}' added successfully.")
@@ -68,13 +64,11 @@ class Repository:
         Args:
             book_id (int): The ID of the book to delete.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # params =
-        # remove the following line after your implementation
-        raise NotImplementedError("delete_book_by_id method is not implemented.")
-
+        
         ### YOUR CODE ###
+        query = "DELETE FROM book WHERE id = %s;"
+        params = (book_id,)
+
         try:
             self.db.execute_query(query = query, params = params)
             logger.info(f"Book with ID {book_id} deleted successfully.")
@@ -89,13 +83,10 @@ class Repository:
         Args:
             book (Book): The book object with updated information.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # params
-        # remove the following line after your implementation
-        raise NotImplementedError("update_book method is not implemented.")
-
         ### YOUR CODE ###
+        query = "UPDATE book SET title = %s, author = %s, publisher_id = %s, year = %s WHERE id = %s;"
+        params = (book.title, book.author, book.publisher_id, book.book_id)
+
         try:
             self.db.execute_query(query = query, params = params)
             logger.info(f"Book with ID {book.id} updated successfully.")
@@ -113,13 +104,10 @@ class Repository:
         Returns:
             List[Book]: A list of books by the given author.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # params = ...
-        # remove the following line after your implementation
-        raise NotImplementedError("get_books_by_author_name method is not implemented.")
-
         ### YOUR CODE ###
+        query = "SELECT book_id, title, author, publisher_id, year_published FROM book WHERE author = %s;"
+        params = (author_name,)
+
         try:
             results = self.db.fetch_results(query = query, params = params)
             return [Book(*result) for result in results]
@@ -134,12 +122,9 @@ class Repository:
         Returns:
             List[Publisher]: A list of Publisher objects.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # remove the following line after your implementation
-        raise NotImplementedError("get_publishers method is not implemented.")
-
         ### YOUR CODE ###
+        query = "SELECT publisher_id, name FROM publisher;"
+
         try:
             results = self.db.fetch_results(query = query)
             return [Publisher(*result) for result in results]
@@ -154,12 +139,9 @@ class Repository:
         Returns:
             List[Member]: A list of Member objects.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # remove the following line after your implementation
-        raise NotImplementedError("get_all_members method is not implemented.")
-
         ### YOUR CODE ###
+        query = "SELECT id, name, email, phone FROM member;"
+
 
         try:
             results = self.db.fetch_results(query = query)
@@ -178,13 +160,10 @@ class Repository:
         Returns:
             Optional[Book]: The Book object if found, otherwise None.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # params = ...
-        # remove the following line after your implementation
-        raise NotImplementedError("get_book_by_name method is not implemented.")
-
         ### YOUR CODE ###
+        query = "SELECT id, title, author, publisher_id, year_published FROM book WHERE title = %s LIMIT 1;"
+        params = (book_name,)
+
         try:
             result = self.db.fetch_results(query = query, params = params)
             return Book(*result[0]) if result else None
@@ -206,14 +185,16 @@ class Repository:
         if not book:
             logger.warning(f"No book found with title '{book_name}'.")
             return []
-
-        ### YOUR QUERY ###
-        # query = ...
-        # params = ...
-        # remove the following line after your implementation
-        raise NotImplementedError("get_all_members_by_book method is not implemented.")
-
         ### YOUR CODE ###
+        query = """
+        SELECT m.id, m.name, m.email, m.phone 
+        FROM members m 
+        JOIN loans l ON m.id = l.member_id 
+        JOIN book b ON l.book_id = b.id 
+        WHERE b.title = %s;
+        """
+        params = (book_name,)
+
         try:
             return self.db.fetch_results(query = query, params = params)
         except Exception as e:
@@ -227,12 +208,9 @@ class Repository:
         Returns:
             List[tuple]: A list of tuples containing loan information.
         """
-        ### YOUR QUERY ###
-        # query = ...
-        # remove the following line after your implementation
-        raise NotImplementedError("get_all_loans method is not implemented.")
-
         ### YOUR CODE ###
+        query = "SELECT id, book_id, member_id, loan_date, return_date FROM loans;"
+        
         try:
             return self.db.fetch_results(query = query)
         except Exception as e:
