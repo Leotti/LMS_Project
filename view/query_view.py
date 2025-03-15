@@ -149,7 +149,7 @@ class QueryTab(QWidget):
             return
         try:
             ### YOUR CODE ###
-            books = self.controller.get_books_by_author(author_name)
+            books = self.controller.get_book_by_author(author_name)
 
 
         except Exception as e:

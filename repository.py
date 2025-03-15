@@ -47,7 +47,7 @@ class Repository:
         """
         
         ### YOUR CODE ###
-        query = "INSERT INTO book (title, author, publisher_id, year) VALUES (%s, %s, %s, %s);"
+        query = "INSERT INTO book (title, author, publisher_id, isbn, year_published) VALUES (%s, %s, %s, %s, %s);"
         params = (book.title, book.author, book.publisher_id, book.isbn, book.year_published)
 
         try:
@@ -66,7 +66,7 @@ class Repository:
         """
         
         ### YOUR CODE ###
-        query = "DELETE FROM book WHERE id = %s;"
+        query = "DELETE FROM book WHERE book_id = %s;"
         params = (book_id,)
 
         try:
@@ -84,8 +84,8 @@ class Repository:
             book (Book): The book object with updated information.
         """
         ### YOUR CODE ###
-        query = "UPDATE book SET title = %s, author = %s, publisher_id = %s, year = %s WHERE id = %s;"
-        params = (book.title, book.author, book.publisher_id, book.book_id)
+        query = "UPDATE book SET title = %s, author = %s, publisher_id = %s, year_published = %s WHERE book_id = %s;"
+        params = (book.title, book.author, book.publisher_id, book.year_published, book.id)
 
         try:
             self.db.execute_query(query = query, params = params)

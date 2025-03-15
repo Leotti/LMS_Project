@@ -160,8 +160,7 @@ class BookTab(QWidget):
 
             ### YOUR CODE ###
 
-            # remove the following line after your implementation
-            raise NotImplementedError("add_book method is not implemented.")
+            self.controller.add_book(title, author, int(publisher), isbn, int(year))
 
             ### YOUR CODE ###
 
@@ -206,8 +205,7 @@ class BookTab(QWidget):
         try:
             ### YOUR CODE ###
 
-            # remove the following line after your implementation
-            raise NotImplementedError("update_book method is not implemented.")
+            self.controller.update_book(book_id, book_title, book_author, int(book_publisher_id), book_isbn, int(book_year))
 
             ### YOUR CODE ###
             QMessageBox.information(self, "Success", "Book updated successfully!")
@@ -240,8 +238,7 @@ class BookTab(QWidget):
         try:
             ### YOUR CODE ###
 
-            # remove the following line after your implementation
-            raise NotImplementedError("delete_book method is not implemented.")
+            self.controller.delete_by_id(book_id)
 
             ### YOUR CODE ###
             QMessageBox.information(self, "Success", "Book deleted successfully!")
