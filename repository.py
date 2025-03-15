@@ -195,6 +195,7 @@ class Repository:
         """
         params = (book_name,)
 
+
         try:
             return self.db.fetch_results(query = query, params = params)
         except Exception as e:
