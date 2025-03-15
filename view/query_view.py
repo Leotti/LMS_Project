@@ -210,7 +210,7 @@ class QueryTab(QWidget):
             return
         try:
             ### YOUR CODE ###
-            results = self.controller.get_members_by_book(book_name)
+            results = self.controller.get_all_member_by_book(book_name)
 
         except Exception as e:
             logger.debug(str(e))
@@ -226,7 +226,7 @@ class QueryTab(QWidget):
 
         try:
             ### YOUR CODE ###
-            results = self.controller.get_members_with_loans()
+            results = self.controller.get_all_loans()
 
         except Exception as e:
             logger.debug(str(e))
