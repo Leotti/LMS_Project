@@ -187,11 +187,11 @@ class Repository:
             return []
         ### YOUR CODE ###
         query = """
-        SELECT m.id, m.name, m.email, m.phone 
-        FROM members m 
-        JOIN loans l ON m.id = l.member_id 
-        JOIN book b ON l.book_id = b.id 
-        WHERE b.title = %s;
+            SELECT m.first_name, m.last_name, b.title, l.date_borrowed, l.due_date, l.date_returned
+            FROM member m
+            JOIN loan l ON m.member_id = l.member_id
+            JOIN book b ON l.book_id = b.book_id
+            WHERE b.title = %s;
         """
         params = (book_name,)
 
@@ -209,7 +209,12 @@ class Repository:
             List[tuple]: A list of tuples containing loan information.
         """
         ### YOUR CODE ###
-        query = "SELECT loan_id, book_id, member_id, loan_date, return_date FROM loans;"
+        query = """
+            SELECT DISTINCT m.first_name, m.last_name, b.title, l.date_borrowed, l.due_date, l.date_returned
+            FROM member m
+            JOIN loan l ON m.member_id = l.member_id
+            JOIN book b ON l.book_id = b.book_id;
+        """
         
         try:
             return self.db.fetch_results(query = query)
