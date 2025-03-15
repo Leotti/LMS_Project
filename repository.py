@@ -161,7 +161,7 @@ class Repository:
             Optional[Book]: The Book object if found, otherwise None.
         """
         ### YOUR CODE ###
-        query = "SELECT book_id, title, author, publisher_id, year_published FROM book WHERE title = %s LIMIT 1;"
+        query = "SELECT book_id, title, author, publisher_id, isbn, year_published FROM book WHERE title = %s LIMIT 1;"
         params = (book_name,)
 
         try:
