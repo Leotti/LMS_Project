@@ -48,7 +48,7 @@ class Repository:
         
         ### YOUR CODE ###
         query = "INSERT INTO book (title, author, publisher_id, isbn, year_published) VALUES (%s, %s, %s, %s, %s);"
-        params = (book.title, book.author, book.publisher_id, book.isbn, book.year_published)
+        params = (str(book.title), str(book.author), book.publisher_id if book.publisher_id else None, str(book.isbn), int(book.year_published))
 
         try:
             self.db.execute_query(query = query, params = params)
@@ -105,7 +105,7 @@ class Repository:
             List[Book]: A list of books by the given author.
         """
         ### YOUR CODE ###
-        query = "SELECT book_id, title, author, publisher_id, year_published FROM book WHERE author = %s;"
+        query = "SELECT book_id, title, author, publisher_id, isbn, year_published FROM book WHERE author = %s;"
         params = (author_name,)
 
         try:
@@ -123,7 +123,7 @@ class Repository:
             List[Publisher]: A list of Publisher objects.
         """
         ### YOUR CODE ###
-        query = "SELECT publisher_id, name FROM publisher;"
+        query = "SELECT publisher_id, name, address, phone, email FROM publisher;"
 
         try:
             results = self.db.fetch_results(query = query)
@@ -140,7 +140,7 @@ class Repository:
             List[Member]: A list of Member objects.
         """
         ### YOUR CODE ###
-        query = "SELECT id, name, email, phone FROM member;"
+        query = "SELECT member_id, first_name, last_name, email, phone, address, date_of_membership FROM member;"
 
 
         try:
@@ -161,7 +161,7 @@ class Repository:
             Optional[Book]: The Book object if found, otherwise None.
         """
         ### YOUR CODE ###
-        query = "SELECT id, title, author, publisher_id, year_published FROM book WHERE title = %s LIMIT 1;"
+        query = "SELECT book_id, title, author, publisher_id, year_published FROM book WHERE title = %s LIMIT 1;"
         params = (book_name,)
 
         try:
@@ -209,7 +209,7 @@ class Repository:
             List[tuple]: A list of tuples containing loan information.
         """
         ### YOUR CODE ###
-        query = "SELECT id, book_id, member_id, loan_date, return_date FROM loans;"
+        query = "SELECT loan_id, book_id, member_id, loan_date, return_date FROM loans;"
         
         try:
             return self.db.fetch_results(query = query)
