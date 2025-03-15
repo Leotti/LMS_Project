@@ -149,7 +149,7 @@ class QueryTab(QWidget):
             return
         try:
             ### YOUR CODE ###
-            books = self.controller.get_book_by_author(author_name)
+            books = self.controller.get_book_by_author(author_name)  
 
 
         except Exception as e:
@@ -169,7 +169,7 @@ class QueryTab(QWidget):
     def execute_list_all_publishers(self) -> None:
         try:
             ### YOUR CODE ###
-           publishers = self.controller.get_all_publishers()
+            publishers = self.controller.get_all_publishers() 
 
         except Exception as e:
             logger.debug(str(e))
